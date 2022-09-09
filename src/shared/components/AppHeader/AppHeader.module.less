@@ -1,0 +1,20 @@
+@import "~antd/lib/style/index";
+
+.AppHeader {
+  padding-top: 20px;
+  padding-bottom: 20px;
+  text-align: center;
+}
+
+.Title {
+  font-size: @heading-1-size;
+  margin: 0 auto;
+  @media screen and (max-width: @screen-md) {
+    max-width: 500px;
+    font-size: @heading-2-size
+  }
+  @media screen and (max-width: @screen-md) {
+    max-width: 250px;
+    font-size: @heading-3-size
+  }
+}

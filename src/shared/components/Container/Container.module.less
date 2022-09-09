@@ -1,0 +1,28 @@
+@import "~antd/lib/style/index";
+
+.Container {
+  width: 100%;
+  align-self: center;
+  margin: auto;
+  padding-left: 20px;
+  padding-right: 20px;
+}
+
+.make-container(@minWidth, @breakpoint) {
+  @media (min-width: @minWidth) {
+    .Container {
+      max-width: @breakpoint;
+    }
+  }
+}
+
+.make-container(@screen-xs-min, @screen-xs);
+.make-container(@screen-sm-min, @screen-sm);
+.make-container(@screen-md-min, @screen-md);
+.make-container(@screen-lg-min, @screen-lg);
+.make-container(@screen-xl-min, @screen-xl);
+.make-container(@screen-xxl-min, @screen-xxl); // Optional
+
+.ContainerFluid {
+  max-width: 100%;
+}

@@ -1,7 +1,7 @@
 import useSWR from 'swr'
 
-import {RawUser} from '../../types'
-import {fetcher} from '../../utils'
+import { RawUser } from '../../types'
+import { fetcher } from '../../utils'
 
 const USERS_API_URL = '/api/users'
 

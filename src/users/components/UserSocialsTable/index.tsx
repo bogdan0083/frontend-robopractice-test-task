@@ -1,18 +1,24 @@
-import {Grid, Table} from 'antd'
-import {SizeType} from 'antd/lib/config-provider/SizeContext'
-import {ColumnsType, ColumnType} from 'antd/lib/table'
-import dayjs from 'dayjs'
-import * as duration from 'dayjs/plugin/duration'
-import {HTMLAttributes, SyntheticEvent, useCallback, useEffect, useState,} from 'react'
-import {Resizable, ResizeCallbackData} from 'react-resizable'
+import { Grid, Table } from 'antd';
+import { SizeType } from 'antd/lib/config-provider/SizeContext';
+import { ColumnType, ColumnsType } from 'antd/lib/table';
+import dayjs from 'dayjs';
+import * as duration from 'dayjs/plugin/duration';
+import { HTMLAttributes, SyntheticEvent, useCallback, useEffect, useState } from 'react';
+import { Resizable, ResizeCallbackData } from 'react-resizable';
 
-import OverlayedError from '../../../shared/components/OverlayedError'
-import {PreparedUser} from '../../../types'
-import styles from './UserSocialsTable.module.css'
+
+
+import OverlayedError from '../../../shared/components/OverlayedError';
+import { PreparedUser } from '../../../types';
+import styles from './UserSocialsTable.module.less';
+
+
+
+
 
 dayjs.extend(duration)
 
-const {useBreakpoint} = Grid
+const { useBreakpoint } = Grid
 
 interface UserSocialsTableProps {
   users: PreparedUser[]
@@ -29,7 +35,7 @@ const ResizableTitle = (
     width: number
   },
 ) => {
-  const {onResize, width, ...restProps} = props
+  const { onResize, width, ...restProps } = props
 
   if (!width) {
     return <th {...restProps} />
@@ -55,7 +61,7 @@ const ResizableTitle = (
         />
       }
       onResize={onResize}
-      draggableOpts={{enableUserSelectHack: false}}
+      draggableOpts={{ enableUserSelectHack: false }}
     >
       <th {...restProps} />
     </Resizable>
@@ -63,13 +69,13 @@ const ResizableTitle = (
 }
 
 const UserSocialsTable = ({
-                            users,
-                            loading = false,
-                            error,
-                          }: UserSocialsTableProps) => {
+  users,
+  loading = false,
+  error,
+}: UserSocialsTableProps) => {
   const [pageSize, setPageSize] = useState(12)
   const [tableSize, setTableSize] = useState<SizeType>('large')
-  const [columns, setColumns] = useState<ColumnsType<RecordType>>(() => {
+  const [columns, setColumns] = useState<ColumnsType<PreparedUser>>(() => {
     {
       const titleColumn = {
         title: 'Users',
@@ -81,7 +87,7 @@ const UserSocialsTable = ({
         sorter: (a, b) => {
           return a.Fullname.localeCompare(b.Fullname)
         },
-      }
+      } as ColumnType<PreparedUser>
 
       const monthlyColumns = {
         title: 'Monthly',
@@ -92,9 +98,9 @@ const UserSocialsTable = ({
         sorter: (a, b) => {
           return a.monthlyDurationInMs - b.monthlyDurationInMs
         },
-      }
+      } as ColumnType<PreparedUser>
 
-      const dayColumns = Array.from({length: DAYS_IN_MONTH}, (v, day) => ({
+      const dayColumns = Array.from({ length: DAYS_IN_MONTH }, (v, day) => ({
         title: day + 1,
         key: day + 1,
         dataIndex: `day${day}`,
@@ -106,14 +112,14 @@ const UserSocialsTable = ({
           const durationInMsB = dayB ? dayB.durationInMs : 0
           return durationInMsA - durationInMsB
         },
-        render: (a, {daysByDay}: PreparedUser) => {
+        render: (a, { daysByDay }: PreparedUser) => {
           return (
             <>
               {daysByDay[day + 1] ? daysByDay[day + 1].durationFormatted : '0'}
             </>
           )
         },
-      }))
+      })) as ColumnsType<PreparedUser>
       return [titleColumn, ...dayColumns, monthlyColumns]
     }
   })
@@ -122,17 +128,10 @@ const UserSocialsTable = ({
 
   useEffect(() => {
     if (screens.xs) {
-      setTableSize('small')
-      // @TODO: make it pretty
       setColumns((prev) =>
         prev.map((c) => {
-          if (c.key === 'Fullname') {
-            c.width = 68
-          } else if (c.key === 'monthly') {
-            c.width = 70
+          if (c.key === 'monthly') {
             c.fixed = false
-          } else {
-            c.width = 50
           }
           return c
         }),
@@ -144,24 +143,24 @@ const UserSocialsTable = ({
 
   const handleResize =
     (index: number) =>
-      (_: SyntheticEvent<Element>, {size}: ResizeCallbackData) => {
-        const newColumns = [...columns]
-        newColumns[index] = {
-          ...newColumns[index],
-          width: size.width,
-        }
-        setColumns(newColumns)
+    (_: SyntheticEvent<Element>, { size }: ResizeCallbackData) => {
+      const newColumns = [...columns]
+      newColumns[index] = {
+        ...newColumns[index],
+        width: size.width,
       }
+      setColumns(newColumns)
+    }
 
-  const mergeColumns: ColumnsType<DataType> = columns.map((col, index) => ({
+  const mergeColumns: ColumnsType<PreparedUser> = columns.map((col, index) => ({
     ...col,
     onHeaderCell: (column) => ({
-      width: (column as ColumnType<DataType>).width,
+      width: (column as ColumnType<PreparedUser>).width,
       onResize: handleResize(index),
     }),
   }))
 
-  const handlePaginationChange = useCallback((page, size) => {
+  const handlePaginationChange = useCallback((page: number, size: number) => {
     if (size !== pageSize) {
       setPageSize(size)
     }
@@ -173,7 +172,7 @@ const UserSocialsTable = ({
         dataSource={users}
         columns={mergeColumns}
         className={styles.UserSocialsTable}
-        scroll={{x: 2800}}
+        scroll={{ x: 2800 }}
         rowKey={'id'}
         components={{
           header: {

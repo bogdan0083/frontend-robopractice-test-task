@@ -1,48 +1,54 @@
-import {expect, test} from "@playwright/test"
+import { expect, test } from '@playwright/test';
 
-test("renders UserSocialsView", async ({page}) => {
-  await page.goto("/", {waitUntil: "networkidle"})
-  await expect(page.locator("data-testid=UserSocialsView")).toBeVisible()
+
+
+
+
+test('renders UserSocialsView', async ({ page }) => {
+  await page.goto('/', { waitUntil: 'networkidle' })
+  await expect(page.locator('data-testid=UserSocialsView')).toBeVisible()
 })
 
-test("renders header row", async ({page}) => {
-  await page.goto("/", {waitUntil: "networkidle"})
+test('renders header row', async ({ page }) => {
+  await page.goto('/', { waitUntil: 'networkidle' })
   const expected = [
-    "Users",
-    "1",
-    "2",
-    "3",
-    "4",
-    "5",
-    "6",
-    "7",
-    "8",
-    "9",
-    "10",
-    "11",
-    "12",
-    "13",
-    "14",
-    "15",
-    "16",
-    "17",
-    "18",
-    "19",
-    "20",
-    "21",
-    "22",
-    "23",
-    "24",
-    "25",
-    "26",
-    "27",
-    "28",
-    "29",
-    "30",
-    "31",
-    "Monthly"
+    'Users',
+    '1',
+    '2',
+    '3',
+    '4',
+    '5',
+    '6',
+    '7',
+    '8',
+    '9',
+    '10',
+    '11',
+    '12',
+    '13',
+    '14',
+    '15',
+    '16',
+    '17',
+    '18',
+    '19',
+    '20',
+    '21',
+    '22',
+    '23',
+    '24',
+    '25',
+    '26',
+    '27',
+    '28',
+    '29',
+    '30',
+    '31',
+    'Monthly',
   ]
-  await expect(await page.locator("data-testid=UserSocialsView >> th").allTextContents()).toEqual(expected)
+  await expect(
+    await page.locator('data-testid=UserSocialsView >> th').allTextContents(),
+  ).toEqual(expected)
 })
 
 test("renders table first row", async ({page}) => {
@@ -234,44 +240,47 @@ test("sort users by monthly total", async ({page}) => {
   ]
 
   let expectedAfterSortAscending = [
-    "77:7",
-    "77:57",
-    "80:27",
-    "80:58",
-    "82:10",
-    "82:28",
-    "83:44",
-    "84:23",
-    "85:2",
-    "86:23",
-    "87:5",
-    "89:6",
+    '77:7',
+    '77:57',
+    '80:27',
+    '80:58',
+    '82:10',
+    '82:28',
+    '83:44',
+    '84:23',
+    '85:2',
+    '86:23',
+    '87:5',
+    '89:6',
   ]
 
-  const expectedAfterSortDescending =
-    [
-      "124:8",
-      "116:16",
-      "116:0",
-      "115:39",
-      "113:18",
-      "113:3",
-      "112:5",
-      "111:25",
-      "111:22",
-      "110:53",
-      "110:52",
-      "110:17",
-    ]
+  const expectedAfterSortDescending = [
+    '124:8',
+    '116:16',
+    '116:0',
+    '115:39',
+    '113:18',
+    '113:3',
+    '112:5',
+    '111:25',
+    '111:22',
+    '110:53',
+    '110:52',
+    '110:17',
+  ]
 
-  const socialsViewLocator = await page.locator("data-testid=UserSocialsView")
-  const namesLocator = await socialsViewLocator.locator("tr:visible >> td:last-of-type")
+  const socialsViewLocator = await page.locator('data-testid=UserSocialsView')
+  const namesLocator = await socialsViewLocator.locator(
+    'tr:visible >> td:last-of-type',
+  )
 
   await expect(await namesLocator.allTextContents()).toEqual(expectedBeforeSort)
 
   // trigger ascending order
-  await socialsViewLocator.locator("tr:visible >> th:last-of-type").click()
-  await expect(await namesLocator.allTextContents()).toEqual(expectedAfterSortAscending)
+  await socialsViewLocator.locator('tr:visible >> th:last-of-type').click()
+  await expect(await namesLocator.allTextContents()).toEqual(
+    expectedAfterSortAscending,
+  )
 
   // trigger descending order
   await socialsViewLocator.locator("tr:visible >> th:last-of-type").click()

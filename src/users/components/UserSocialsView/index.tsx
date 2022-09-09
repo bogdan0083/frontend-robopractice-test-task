@@ -1,13 +1,19 @@
-import {Input} from 'antd'
-import dayjs from 'dayjs'
-import customParseFormat from 'dayjs/plugin/customParseFormat'
-import duration from 'dayjs/plugin/duration'
-import {useMemo, useState} from 'react'
+import { Input } from 'antd';
+import dayjs from 'dayjs';
+import customParseFormat from 'dayjs/plugin/customParseFormat';
+import duration from 'dayjs/plugin/duration';
+import { useMemo, useState } from 'react';
 
-import {PreparedUser} from '../../../types'
-import useUsers from '../../hooks/useUsers'
-import UserSocialsTable from '../UserSocialsTable'
-import styles from './UserSocialsView.module.css'
+
+
+import { PreparedUser } from '../../../types';
+import useUsers from '../../hooks/useUsers';
+import UserSocialsTable from '../UserSocialsTable';
+import styles from './UserSocialsView.module.css';
+
+
+
+
 
 dayjs.extend(customParseFormat)
 dayjs.extend(duration)
@@ -17,11 +23,11 @@ const DEFAULT_TIME_FORMAT = 'HH-mm'
 
 const UserSocialsView = () => {
   const [query, setQuery] = useState<string>('')
-  const {users, error, isLoading} = useUsers()
+  const { users, error, isLoading } = useUsers()
 
   const preparedUsers = useMemo<PreparedUser>(() => {
     if (users) {
-      return users.map(({id, Fullname, Days}) => {
+      return users.map(({ id, Fullname, Days }) => {
         // @TODO: Add comments about function details
         const [monthlySocialsDuration, daysByDay] = Days.reduce(
           (acc, dayData) => {
@@ -83,7 +89,7 @@ const UserSocialsView = () => {
         onSearch={(v) => setQuery(v.toLowerCase())}
         // @NOTE Ideally we would throttle onInput event to prevent updating data too often
         onInput={(e) => setQuery(e.target.value.toLowerCase())}
-        data-testid={"SearchInput"}
+        data-testid={'SearchInput'}
       />
       <UserSocialsTable
         users={filteredAndPreparedUsers}

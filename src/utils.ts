@@ -1,6 +1,10 @@
-import {Fetcher} from 'swr'
+import { Fetcher } from 'swr'
 
-import {UserSocialData} from './types'
+import { UserSocialData } from './types'
+
+
+
+
 
 export const fetcher: Fetcher<UserSocialData> = (
   input: RequestInfo,

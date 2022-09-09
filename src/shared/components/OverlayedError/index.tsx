@@ -1,8 +1,13 @@
-import {Alert} from 'antd'
-import clsx from 'clsx'
-import {ReactNode} from 'react'
+import { Alert } from 'antd';
+import { ReactNode } from 'react';
 
-import styles from './OverlayedError.module.css'
+
+
+import styles from './OverlayedError.module.css';
+
+
+
+
 
 interface OverlayedErrorProps<T> {
   error?: T
@@ -10,11 +15,9 @@ interface OverlayedErrorProps<T> {
 }
 
 export default function OverlayedError<T extends Error>({
-                                                          error,
-                                                          children,
-                                                        }: OverlayedErrorProps<T>) {
-  const wrapperCn = clsx(error && styles.OverlayedError)
-  const errorContentCn = clsx(error && styles.OverlayedErrorContent)
+  error,
+  children,
+}: OverlayedErrorProps<T>) {
   return (
     <div className={styles.OverlayedError}>
       {error && (

@@ -1,7 +1,7 @@
 import clsx from 'clsx'
-import {ReactNode} from 'react'
+import { ReactNode } from 'react'
 
-import styles from './Container.module.css'
+import styles from './Container.module.less'
 
 interface ContainerProps {
   className?: string
