@@ -3,7 +3,7 @@ import useSWR from 'swr'
 import {RawUser} from '../../types'
 import {fetcher} from '../../utils'
 
-const USERS_API_URL = import.meta.env.VITE_BASE_API_URL + '/api/users'
+const USERS_API_URL = '/api/users'
 
 type UseUsersResponse = {
   users: RawUser[]
@@ -12,13 +12,14 @@ type UseUsersResponse = {
   isError: boolean
 }
 
+// @TODO: I don't like error handling. Fix this
 const useUsers = (): UseUsersResponse => {
   const { data, error } = useSWR(USERS_API_URL, fetcher)
 
   return {
-    users: data,
+    users: data?.status === 'error' ? undefined : data,
     isLoading: !error && !data,
-    error,
+    error: data?.status === 'error' ? new Error(data.message) : error,
     isError: error,
   }
 }
