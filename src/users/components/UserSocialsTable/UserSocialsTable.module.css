@@ -1,0 +1,20 @@
+.Resizable {
+    position: relative;
+    background-clip: padding-box;
+}
+
+.ResizableHandle {
+    position: absolute;
+    right: -5px;
+    bottom: 0;
+    z-index: 3;
+    width: 10px;
+    height: 100%;
+    cursor: col-resize;
+}
+
+.UserSocialsTable th:last-of-type .ResizableHandle {
+    right: auto;
+    left: -10px;
+    width: 20px;
+}

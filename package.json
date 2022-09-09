@@ -3,15 +3,18 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@playwright/test": "^1.25.2",
     "@testing-library/jest-dom": "^5.16.4",
     "@testing-library/react": "^12.1.4",
     "@testing-library/user-event": "^13.5.0",
     "@types/lodash.groupby": "^4.6.7",
+    "@types/react-resizable": "^3.0.2",
     "antd": "^4.23.0",
     "clsx": "^1.2.1",
     "cors": "^2.8.5",
     "dayjs": "^1.11.5",
     "lodash.groupby": "^4.6.0",
+    "playwright": "^1.25.2",
     "react": "^18.0.0",
     "react-dom": "^18.0.0",
     "react-resizable": "^3.0.4",
@@ -27,7 +30,8 @@
     "format": "prettier --write \"src/**/*.{ts,tsx}\" ",
     "lint": "eslint ./src --fix",
     "prepare": "husky install",
-    "scriptname": "husky install"
+    "scriptname": "husky install",
+    "test:e2e": "playwright test"
   },
   "eslintConfig": {
     "extends": [

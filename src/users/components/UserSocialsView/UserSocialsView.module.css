@@ -1,0 +1,11 @@
+.UserSocialsView {
+    /*margin-bottom: 16px;*/
+}
+
+.UserSocialsView :global(.ant-input-group-wrapper) {
+    margin-bottom: 20px;
+}
+
+.UserSocialsView :global(.ant-pagination-mini) {
+    justify-content: center;
+}

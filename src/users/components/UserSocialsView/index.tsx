@@ -1,4 +1,4 @@
-import {Input, Space} from 'antd'
+import {Input} from 'antd'
 import dayjs from 'dayjs'
 import customParseFormat from 'dayjs/plugin/customParseFormat'
 import duration from 'dayjs/plugin/duration'
@@ -7,6 +7,7 @@ import {useMemo, useState} from 'react'
 import {PreparedUser} from '../../../types'
 import useUsers from '../../hooks/useUsers'
 import UserSocialsTable from '../UserSocialsTable'
+import styles from './UserSocialsView.module.css'
 
 dayjs.extend(customParseFormat)
 dayjs.extend(duration)
@@ -64,32 +65,32 @@ const UserSocialsView = () => {
     return undefined
   }, [users])
 
-  const filteredAndPreparedUsers = useMemo(
-    () => {
-      if (preparedUsers && !!query) {
-        return preparedUsers.filter((u) => u.Fullname.toLowerCase().includes(query))
-      } else {
-        return preparedUsers
-      }
-    },
-    [query, preparedUsers]
-  )
-
-  console.log(filteredAndPreparedUsers)
+  const filteredAndPreparedUsers = useMemo(() => {
+    if (preparedUsers && !!query) {
+      return preparedUsers.filter((u) =>
+        u.Fullname.toLowerCase().includes(query),
+      )
+    } else {
+      return preparedUsers
+    }
+  }, [query, preparedUsers])
 
   return (
-    <>
-      <Space direction={'vertical'}>
-        <Input.Search
-          size={'large'}
-          placeholder={'Start typing...'}
-          onSearch={(v) => setQuery(v.toLowerCase())}
-          // @NOTE Ideally we would throttle onInput event to prevent updating data too often
-          onInput={e => setQuery(e.target.value.toLowerCase())}
-        />
-        <UserSocialsTable users={filteredAndPreparedUsers}/>
-      </Space>
-    </>
+    <div className={styles.UserSocialsView} data-testid={'UserSocialsView'}>
+      <Input.Search
+        size={'large'}
+        placeholder={'Start typing...'}
+        onSearch={(v) => setQuery(v.toLowerCase())}
+        // @NOTE Ideally we would throttle onInput event to prevent updating data too often
+        onInput={(e) => setQuery(e.target.value.toLowerCase())}
+        data-testid={"SearchInput"}
+      />
+      <UserSocialsTable
+        users={filteredAndPreparedUsers}
+        loading={isLoading}
+        error={error}
+      />
+    </div>
   )
 }
 
