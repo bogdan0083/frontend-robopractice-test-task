@@ -17,7 +17,7 @@ const config: PlaywrightTestConfig = {
     reuseExistingServer: !process.env.CI,
   }],
   use: {
-    headless: false,
+    headless: true,
     baseURL: "http://localhost:5174",
     viewport: {width: 1280, height: 720},
     ignoreHTTPSErrors: true,
