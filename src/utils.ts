@@ -1,12 +1,8 @@
 import { Fetcher } from 'swr'
 
-import { UserSocialData } from './types'
+import { RawUser } from './types'
 
-
-
-
-
-export const fetcher: Fetcher<UserSocialData> = (
+export const fetcher: Fetcher<RawUser> = (
   input: RequestInfo,
   init?: RequestInit,
 ) => fetch(input, init).then((res) => res.json())

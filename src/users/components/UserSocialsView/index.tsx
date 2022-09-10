@@ -1,85 +1,95 @@
-import { Input } from 'antd';
-import dayjs from 'dayjs';
-import customParseFormat from 'dayjs/plugin/customParseFormat';
-import duration from 'dayjs/plugin/duration';
-import { useMemo, useState } from 'react';
+import { Grid, Input } from 'antd'
+import { ColumnType, ColumnsType } from 'antd/lib/table'
+import dayjs from 'dayjs'
+import customParseFormat from 'dayjs/plugin/customParseFormat'
+import duration from 'dayjs/plugin/duration'
+import {
+  SyntheticEvent,
+  useCallback,
+  useEffect,
+  useMemo,
+  useState,
+} from 'react'
+import { ResizeCallbackData } from 'react-resizable'
 
-
-
-import { PreparedUser } from '../../../types';
-import useUsers from '../../hooks/useUsers';
-import UserSocialsTable from '../UserSocialsTable';
-import styles from './UserSocialsView.module.css';
-
-
-
-
+import { PreparedUser } from '../../../types'
+import useUsers from '../../hooks/useUsers'
+import UserSocialsTable from '../UserSocialsTable'
+import styles from './UserSocialsView.module.css'
+import { filterUsersByQuery, prepareColumns, prepareUsers } from './utils'
 
 dayjs.extend(customParseFormat)
 dayjs.extend(duration)
 
+const { useBreakpoint } = Grid
+
 const USERS_PER_PAGE = 12
-const DEFAULT_TIME_FORMAT = 'HH-mm'
+// @TODO: calculate based on user days
+const DAYS_IN_MONTH = 31
 
 const UserSocialsView = () => {
+  const [pageSize, setPageSize] = useState(USERS_PER_PAGE)
   const [query, setQuery] = useState<string>('')
   const { users, error, isLoading } = useUsers()
 
-  const preparedUsers = useMemo<PreparedUser>(() => {
-    if (users) {
-      return users.map(({ id, Fullname, Days }) => {
-        // @TODO: Add comments about function details
-        const [monthlySocialsDuration, daysByDay] = Days.reduce(
-          (acc, dayData) => {
-            const startDate = dayjs(dayData.Start, DEFAULT_TIME_FORMAT)
-            const endDate = dayjs(dayData.End, DEFAULT_TIME_FORMAT)
-            const duration = dayjs.duration(endDate.diff(startDate))
+  const preparedUsers = useMemo<PreparedUser[] | undefined>(
+    () => (users ? prepareUsers(users) : undefined),
+    [users],
+  )
 
-            if (!acc[0]) {
-              // fill the initial value with first duration
-              acc[0] = duration
-            } else {
-              // accumulate all the durations to get monthly total
-              // @TODO: just acc[0].add ?
-              acc[0] = acc[0].add(duration)
-            }
+  const filteredAndPreparedUsers = useMemo(
+    () =>
+      preparedUsers && !!query // if users are prepared and query is not empty
+        ? filterUsersByQuery(preparedUsers, query)
+        : preparedUsers,
+    [query, preparedUsers],
+  )
 
-            const parsedDay = dayjs(dayData.Date).date()
-
-            acc[1][parsedDay] = {
-              durationFormatted: duration.format('HH:mm'),
-              durationInMs: duration.asMilliseconds(),
-            }
-
-            return acc
-          },
-          [null, {}],
-        )
-
-        const totalHours = parseInt(monthlySocialsDuration.asHours())
-        const monthlyDurationFormatted = `${totalHours}:${monthlySocialsDuration.minutes()}`
-
-        return {
-          id,
-          Fullname,
-          daysByDay: daysByDay,
-          monthlyDurationFormatted,
-          monthlyDurationInMs: monthlySocialsDuration.asMilliseconds(),
-        }
-      })
+  const handlePaginationChange = useCallback((page: number, size: number) => {
+    if (size !== pageSize) {
+      setPageSize(size)
     }
-    return undefined
-  }, [users])
+  }, [])
 
-  const filteredAndPreparedUsers = useMemo(() => {
-    if (preparedUsers && !!query) {
-      return preparedUsers.filter((u) =>
-        u.Fullname.toLowerCase().includes(query),
+  const [columns, setColumns] = useState<ColumnsType<PreparedUser>>(() =>
+    prepareColumns(DAYS_IN_MONTH),
+  )
+
+  const screens = useBreakpoint()
+
+  useEffect(() => {
+    if (screens.xs) {
+      setColumns((prev) =>
+        prev.map((c) => {
+          if (c.key === 'monthly') {
+            c.fixed = false
+          }
+          return c
+        }),
       )
-    } else {
-      return preparedUsers
     }
-  }, [query, preparedUsers])
+  }, [screens])
+
+  const handleResize =
+    (index: number) =>
+    (_: SyntheticEvent<Element>, { size }: ResizeCallbackData) => {
+      const newColumns = [...columns]
+      newColumns[index] = {
+        ...newColumns[index],
+        width: size.width,
+      }
+      setColumns(newColumns)
+    }
+
+  const mergedColumns: ColumnsType<PreparedUser> = columns.map(
+    (col, index) => ({
+      ...col,
+      onHeaderCell: (column) => ({
+        width: (column as ColumnType<PreparedUser>).width,
+        onResize: handleResize(index),
+      }),
+    }),
+  )
 
   return (
     <div className={styles.UserSocialsView} data-testid={'UserSocialsView'}>
@@ -88,13 +98,16 @@ const UserSocialsView = () => {
         placeholder={'Start typing...'}
         onSearch={(v) => setQuery(v.toLowerCase())}
         // @NOTE Ideally we would throttle onInput event to prevent updating data too often
-        onInput={(e) => setQuery(e.target.value.toLowerCase())}
+        onInput={(e) => setQuery(e.currentTarget.value.toLowerCase())}
         data-testid={'SearchInput'}
       />
       <UserSocialsTable
         users={filteredAndPreparedUsers}
         loading={isLoading}
         error={error}
+        pageSize={pageSize}
+        onPaginationChange={handlePaginationChange}
+        columns={mergedColumns}
       />
     </div>
   )

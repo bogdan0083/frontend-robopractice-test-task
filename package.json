@@ -53,15 +53,15 @@
   },
   "husky": {
     "hooks": {
-      "pre-commit": "lint-staged"
+      "pre-commit": "npx lint-staged & npm run test:e2e"
     }
   },
   "lint-staged": {
     "*.{js,jsx,ts,tsx,css,scss,less}": [
-      "prettier --ignore-path ./.prettierignore --write "
+      "npx prettier --ignore-path ./.prettierignore --write "
     ],
     "*.{js,jsx,ts,tsx}": [
-      "eslint"
+      "npx eslint"
     ]
   },
   "devDependencies": {

@@ -1,14 +1,8 @@
-import { Layout } from 'antd';
+import { Layout } from 'antd'
 
-
-
-import AppHeader from './shared/components/AppHeader';
-import Container from './shared/components/Container';
+import AppHeader from './shared/components/AppHeader'
+import Container from './shared/components/Container'
 import UserSocialsView from './users/components/UserSocialsView'
-
-
-
-
 
 const { Content } = Layout
 

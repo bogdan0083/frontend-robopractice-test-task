@@ -1,13 +1,7 @@
-import { Alert } from 'antd';
-import { ReactNode } from 'react';
+import { Alert } from 'antd'
+import { ReactNode } from 'react'
 
-
-
-import styles from './OverlayedError.module.css';
-
-
-
-
+import styles from './OverlayedError.module.css'
 
 interface OverlayedErrorProps<T> {
   error?: T

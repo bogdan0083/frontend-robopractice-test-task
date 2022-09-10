@@ -1,21 +1,10 @@
-import React from 'react';
+import React from 'react'
 
-
-
-import App from './App';
-
-
-
-
-
+import App from './App'
 
 import '../styles/globals.less'
 
 import { createRoot } from 'react-dom/client'
-
-
-
-
 
 const container = document.getElementById('root') as HTMLElement
 const root = createRoot(container)
