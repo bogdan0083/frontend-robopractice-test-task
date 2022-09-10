@@ -3,20 +3,25 @@ import { Resizable, ResizeCallbackData, ResizeHandle } from 'react-resizable'
 
 import styles from '../UserSocialsTable/UserSocialsTable.module.less'
 
+
+
+
+
 export const ResizableHeadCell = (
   props: HTMLAttributes<any> & {
     onResize: (e: SyntheticEvent, data: ResizeCallbackData) => void
     width: number
+    dataIndex: string
   },
 ) => {
-  const { onResize, width, ...restProps } = props
+  const { onResize, dataIndex, width, ...restProps } = props
 
   if (!width) {
     return <th {...restProps} />
   }
 
-  const resizeHandlers: ResizeHandle[] = restProps['aria-label']?.includes(
-    'Monthly',
+  const resizeHandlers: ResizeHandle[] = dataIndex?.includes(
+    'monthly',
   )
     ? ['w']
     : ['e']

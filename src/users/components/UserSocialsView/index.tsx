@@ -105,6 +105,7 @@ const UserSocialsView = () => {
       ...col,
       onHeaderCell: (column) => ({
         width: (column as ColumnType<PreparedUser>).width,
+        dataIndex: (column as ColumnType<PreparedUser>).dataIndex,
         onResize: handleResize(index),
       }),
     }),
