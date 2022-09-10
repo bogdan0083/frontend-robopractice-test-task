@@ -1,8 +1,6 @@
-import { expect, test } from '@playwright/test';
+import { expect, test } from '@playwright/test'
 
-
-
-
+test.describe.configure({ mode: 'parallel' })
 
 test('renders UserSocialsView', async ({ page }) => {
   await page.goto('/', { waitUntil: 'networkidle' })
