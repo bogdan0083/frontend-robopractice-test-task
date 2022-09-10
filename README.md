@@ -1,3 +1,10 @@
+# RedMadRobot Frontend Challenge
+Выполнение тестового задания
+## Used technologies
+* React, Ant Design – for working with UI.
+* [Playwright](https://playwright.dev/) – for e2e tests. Ideally we would also mock all API requests but since the server already uses rest data we can avoid it.
+* [Vercel](https://vercel.com/) – for application deployment.
+ 
 ## Задание
 
 У нас есть данные о том сколько сотрудники компании проводят времени в соцсетях с рабочего компьютера. Нам поступило задание сделать приложение, в котором можно удобно просматривать данную информацию с возможностью видеть
