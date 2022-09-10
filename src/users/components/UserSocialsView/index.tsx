@@ -33,6 +33,7 @@ const UserSocialsView = () => {
   const [daysInMonth, setDaysInMonth] = useState<number | undefined>(undefined)
   const [pageSize, setPageSize] = useState(USERS_PER_PAGE)
   const [query, setQuery] = useState<string>('')
+  const [columns, setColumns] = useState<ColumnsType<PreparedUser>>([])
   const { users, error, isLoading } = useUsers()
 
   const preparedUsers = useMemo<PreparedUser[] | undefined>(
@@ -65,8 +66,6 @@ const UserSocialsView = () => {
     [pageSize],
   )
 
-  const [columns, setColumns] = useState<ColumnsType<PreparedUser>>([])
-
   useEffect(
     () => (daysInMonth ? setColumns(prepareColumns(daysInMonth)) : undefined),
     [daysInMonth],
@@ -85,7 +84,7 @@ const UserSocialsView = () => {
         }),
       )
     }
-  }, [screens])
+  }, [screens, columns])
 
   const handleResize =
     (index: number) =>
@@ -108,6 +107,11 @@ const UserSocialsView = () => {
     }),
   )
 
+  const usersLoaded = useMemo(
+    () => preparedUsers && !isLoading && (mergedColumns.length > 0),
+    [preparedUsers, isLoading, mergedColumns],
+  )
+
   return (
     <div className={styles.UserSocialsView} data-testid={'UserSocialsView'}>
       <Input.Search
@@ -120,7 +124,7 @@ const UserSocialsView = () => {
       />
       <UserSocialsTable
         users={filteredAndPreparedUsers}
-        loading={isLoading}
+        loading={!usersLoaded}
         error={error}
         pageSize={pageSize}
         onPaginationChange={handlePaginationChange}

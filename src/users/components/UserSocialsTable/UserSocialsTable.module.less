@@ -23,7 +23,7 @@
 
 @media screen and (max-width: @screen-sm) {
     .UserSocialsTable {
-        tbody tr:not(:first-child) {
+        tbody tr:not(:first-child), thead tr {
             td, th {
                 padding: @padding-xs !important;
             }
@@ -32,5 +32,15 @@
                 width: 100px !important;
             }
         }
+        thead tr th:first-child {
+            width: 100px;
+        }
+
+        thead tr th:first-child {
+            width: 100px;
+        }
+    }
+    .ResizableHandle {
+        display: none;
     }
 }
