@@ -89,12 +89,15 @@ const UserSocialsView = () => {
   const handleResize =
     (index: number) =>
     (_: SyntheticEvent, { size }: ResizeCallbackData) => {
-      const newColumns = [...columns]
-      newColumns[index] = {
-        ...newColumns[index],
-        width: size.width,
-      }
-      setColumns(newColumns)
+      setColumns((prevColumns) => {
+        return prevColumns.map((c, idx) => {
+          if (idx === index) {
+            return {...c, width: size.width}
+          } else {
+            return c
+          }
+        })
+      })
     }
 
   const mergedColumns: ColumnsType<PreparedUser> = columns.map(
