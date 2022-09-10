@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 48 48" fill="none">
+    <script xmlns="" type="text/javascript" src="chrome-extension://bgfbijeikimjmdjldemlegooghdjinmj/build/page.js"/>
+    <path fill-rule="evenodd" clip-rule="evenodd"
+          d="M31.2652 0C36.084 0 38.4928 0 41.0868 0.82C43.9188 1.8508 46.1492 4.0812 47.18 6.9132C48 9.5068 48 11.9164 48 16.7348V31.2652C48 36.084 48 38.4928 47.18 41.0868C46.1492 43.9188 43.9188 46.1492 41.0868 47.1796C38.4928 48 36.084 48 31.2652 48H16.7348C11.916 48 9.5068 48 6.9132 47.1796C4.0812 46.1492 1.8508 43.9188 0.82 41.0868C0 38.4928 0 36.084 0 31.2652V16.7348C0 11.9164 0 9.5068 0.82 6.9132C1.8508 4.0812 4.0812 1.8508 6.9132 0.82C9.5068 0 11.916 0 16.7348 0H31.2652Z"
+          fill="#FF0000"/>
+    <path fill-rule="evenodd" clip-rule="evenodd"
+          d="M21 7H24V10H27V19H33V22V28H30V22H27H24V19V13H21V7ZM18 19V13H21V19H18ZM27 34V40H24V37H21V28H15V25V19H18V25H21H24V28V34H27ZM27 34H30V28H27V34Z"
+          fill="white"/>
+</svg>
