@@ -1,9 +1,9 @@
-import { Typography, TypographyProps } from 'antd'
-
 import Container from '../Container'
 import styles from './AppHeader.module.less'
 
-const { Title } = Typography as TypographyProps
+
+
+
 
 const AppHeader = () => {
   return (

@@ -1,5 +1,9 @@
 import { expect, test } from '@playwright/test'
 
+
+
+
+
 test.describe.configure({ mode: 'parallel' })
 
 test('renders UserSocialsView', async ({ page }) => {
@@ -162,13 +166,13 @@ test("sort users by fullname", async ({page}) => {
   await expect(await namesLocator.allTextContents()).toEqual(expectedBeforeSort)
 
   await socialsViewLocator.locator("text=Users").click()
-  page.waitForTimeout(100)
+  await page.waitForTimeout(100)
 
   await expect(await namesLocator.allTextContents()).toEqual(expectedAfterSort)
 
   // Revert back to ascending order
   await socialsViewLocator.locator("text=Users").click()
-  page.waitForTimeout(100)
+  await page.waitForTimeout(100)
 
   await expect(await namesLocator.allTextContents()).toEqual(expectedBeforeSort)
 })
@@ -208,13 +212,13 @@ test("sort users by first day", async ({page}) => {
 
   // trigger descending order
   await socialsViewLocator.locator("tr:visible >> th:nth-child(2)").click()
-  page.waitForTimeout(100)
+  await page.waitForTimeout(100)
 
   await expect(await namesLocator.allTextContents()).toEqual(expectedAfterSortDescending)
 
   // trigger unsorted
   await socialsViewLocator.locator("tr:visible >> th:nth-child(2)").click()
-  page.waitForTimeout(100)
+  await page.waitForTimeout(100)
 
   await expect(await namesLocator.allTextContents()).toEqual(expectedBeforeSort)
 })
@@ -282,13 +286,13 @@ test("sort users by monthly total", async ({page}) => {
 
   // trigger descending order
   await socialsViewLocator.locator("tr:visible >> th:last-of-type").click()
-  page.waitForTimeout(100)
+  await page.waitForTimeout(100)
 
   await expect(await namesLocator.allTextContents()).toEqual(expectedAfterSortDescending)
 
   // trigger unsorted
   await socialsViewLocator.locator("tr:visible >> th:last-of-type").click()
-  page.waitForTimeout(100)
+  await page.waitForTimeout(100)
 
   await expect(await namesLocator.allTextContents()).toEqual(expectedBeforeSort)
 })

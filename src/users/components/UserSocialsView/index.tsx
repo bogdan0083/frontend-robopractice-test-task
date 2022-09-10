@@ -18,6 +18,10 @@ import UserSocialsTable from '../UserSocialsTable'
 import styles from './UserSocialsView.module.css'
 import { filterUsersByQuery, prepareColumns, prepareUsers } from './utils'
 
+
+
+
+
 dayjs.extend(customParseFormat)
 dayjs.extend(duration)
 
@@ -49,7 +53,7 @@ const UserSocialsView = () => {
     if (size !== pageSize) {
       setPageSize(size)
     }
-  }, [])
+  }, [pageSize])
 
   const [columns, setColumns] = useState<ColumnsType<PreparedUser>>(() =>
     prepareColumns(DAYS_IN_MONTH),
@@ -72,7 +76,7 @@ const UserSocialsView = () => {
 
   const handleResize =
     (index: number) =>
-    (_: SyntheticEvent<Element>, { size }: ResizeCallbackData) => {
+    (_: SyntheticEvent, { size }: ResizeCallbackData) => {
       const newColumns = [...columns]
       newColumns[index] = {
         ...newColumns[index],

@@ -1,4 +1,4 @@
-import { Grid, Table } from 'antd'
+import { Table } from 'antd'
 import { ColumnsType } from 'antd/lib/table'
 import dayjs from 'dayjs'
 import * as duration from 'dayjs/plugin/duration'
@@ -8,9 +8,11 @@ import { PreparedUser } from '../../../types'
 import { ResizableHeadCell } from '../UserSocialsView/ResizableHeadCell'
 import styles from './UserSocialsTable.module.less'
 
-dayjs.extend(duration)
 
-const { useBreakpoint } = Grid
+
+
+
+dayjs.extend(duration)
 
 interface UserSocialsTableProps {
   users?: PreparedUser[]
