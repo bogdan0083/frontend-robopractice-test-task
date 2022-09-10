@@ -20,9 +20,7 @@ export const ResizableHeadCell = (
     return <th {...restProps} />
   }
 
-  const resizeHandlers: ResizeHandle[] = dataIndex?.includes(
-    'monthly',
-  )
+  const resizeHandlers: ResizeHandle[] = dataIndex?.includes('monthly')
     ? ['w']
     : ['e']
 

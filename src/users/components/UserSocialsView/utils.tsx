@@ -107,9 +107,7 @@ export const prepareColumns = (
         return durationInMsA - durationInMsB
       },
       render: (a, { daysByDay }: PreparedUser) => {
-        return (
-          <>{daysByDay[day] ? daysByDay[day].durationFormatted : '0'}</>
-        )
+        return <>{daysByDay[day] ? daysByDay[day].durationFormatted : '0'}</>
       },
     }
   }) as ColumnsType<PreparedUser>

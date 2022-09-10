@@ -92,7 +92,7 @@ const UserSocialsView = () => {
       setColumns((prevColumns) => {
         return prevColumns.map((c, idx) => {
           if (idx === index) {
-            return {...c, width: size.width}
+            return { ...c, width: size.width }
           } else {
             return c
           }
@@ -112,7 +112,7 @@ const UserSocialsView = () => {
   )
 
   const usersLoaded = useMemo(
-    () => preparedUsers && !isLoading && (mergedColumns.length > 0),
+    () => preparedUsers && !isLoading && mergedColumns.length > 0,
     [preparedUsers, isLoading, mergedColumns],
   )
 
