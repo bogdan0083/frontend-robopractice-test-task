@@ -1,7 +1,12 @@
-import {PlaywrightTestConfig} from "@playwright/test";
+import { PlaywrightTestConfig } from '@playwright/test'
+
+
+
+
 
 const config: PlaywrightTestConfig = {
   testDir: "./__tests__/e2e",
+  retries: 3,
   webServer: [{
     command: "npx vite --port 5174",
     port: 5174,
