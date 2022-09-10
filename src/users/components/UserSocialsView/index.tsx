@@ -28,10 +28,9 @@ dayjs.extend(duration)
 const { useBreakpoint } = Grid
 
 const USERS_PER_PAGE = 12
-// @TODO: calculate based on user days
-const DAYS_IN_MONTH = 31
 
 const UserSocialsView = () => {
+  const [daysInMonth, setDaysInMonth] = useState<number | undefined>(undefined)
   const [pageSize, setPageSize] = useState(USERS_PER_PAGE)
   const [query, setQuery] = useState<string>('')
   const { users, error, isLoading } = useUsers()
@@ -41,6 +40,14 @@ const UserSocialsView = () => {
     [users],
   )
 
+  // calculate days in month based on user date
+  useEffect(() => {
+    if (users) {
+      const daysInMonth1 = dayjs(users[0].Days[0].Date).daysInMonth()
+      setDaysInMonth(daysInMonth1)
+    }
+  }, [users])
+
   const filteredAndPreparedUsers = useMemo(
     () =>
       preparedUsers && !!query // if users are prepared and query is not empty
@@ -49,14 +56,20 @@ const UserSocialsView = () => {
     [query, preparedUsers],
   )
 
-  const handlePaginationChange = useCallback((page: number, size: number) => {
-    if (size !== pageSize) {
-      setPageSize(size)
-    }
-  }, [pageSize])
+  const handlePaginationChange = useCallback(
+    (page: number, size: number) => {
+      if (size !== pageSize) {
+        setPageSize(size)
+      }
+    },
+    [pageSize],
+  )
 
-  const [columns, setColumns] = useState<ColumnsType<PreparedUser>>(() =>
-    prepareColumns(DAYS_IN_MONTH),
+  const [columns, setColumns] = useState<ColumnsType<PreparedUser>>([])
+
+  useEffect(
+    () => (daysInMonth ? setColumns(prepareColumns(daysInMonth)) : undefined),
+    [daysInMonth],
   )
 
   const screens = useBreakpoint()
