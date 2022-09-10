@@ -2,7 +2,7 @@
 Выполнение тестового задания
 ## Used technologies
 * React, Ant Design – for working with UI.
-* [Playwright](https://playwright.dev/) – for e2e tests. Ideally we would also mock all API requests but since the server already uses rest data we can avoid it.
+* [Playwright](https://playwright.dev/) – for e2e tests. Ideally we would also mock all API requests but since the server already uses test data we can avoid it.
 
 ## Installation
 Clone the repository and run the following command:
