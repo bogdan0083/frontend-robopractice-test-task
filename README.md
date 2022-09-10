@@ -3,7 +3,24 @@
 ## Used technologies
 * React, Ant Design – for working with UI.
 * [Playwright](https://playwright.dev/) – for e2e tests. Ideally we would also mock all API requests but since the server already uses rest data we can avoid it.
-* [Vercel](https://vercel.com/) – for application deployment.
+
+## Installation
+Clone the repository and run the following command:
+```
+npm install
+```
+
+Then run the API server:
+```
+npm run server
+```
+
+And finaly run vite dev server:
+```
+npm run dev
+```
+
+Hooray! It's working! 🎉
  
 ## Задание
 
