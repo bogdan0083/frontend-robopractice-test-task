@@ -1,8 +1,12 @@
-import { expect, test } from '@playwright/test'
+import { expect, test } from '@playwright/test';
 
 
 
 
+
+// @NOTE: Ideally we would use mock server to avoid getting
+// data from production, but since we're already using test data
+// we might skip it for now.
 
 test.describe.configure({ mode: 'parallel' })
 
