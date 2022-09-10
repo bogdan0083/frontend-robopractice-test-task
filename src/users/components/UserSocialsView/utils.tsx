@@ -4,6 +4,10 @@ import { Duration } from 'dayjs/plugin/duration'
 
 import { PreparedUser, RawUser } from '../../../types'
 
+
+
+
+
 const DEFAULT_TIME_FORMAT = 'HH-mm'
 
 /*
@@ -88,23 +92,26 @@ export const prepareColumns = (
     },
   } as ColumnType<PreparedUser>
 
-  const dayColumns = Array.from({ length: daysInMonth }, (v, day) => ({
-    title: day + 1,
-    key: day + 1,
-    dataIndex: `day${day}`,
-    width: 90,
-    sorter: (a, b) => {
-      const dayA = a.daysByDay[day + 1]
-      const dayB = b.daysByDay[day + 1]
-      const durationInMsA = dayA ? dayA.durationInMs : 0
-      const durationInMsB = dayB ? dayB.durationInMs : 0
-      return durationInMsA - durationInMsB
-    },
-    render: (a, { daysByDay }: PreparedUser) => {
-      return (
-        <>{daysByDay[day + 1] ? daysByDay[day + 1].durationFormatted : '0'}</>
-      )
-    },
-  })) as ColumnsType<PreparedUser>
+  const dayColumns = Array.from({ length: daysInMonth }, (_, k) => {
+    const day = k + 1
+    return {
+      title: day,
+      key: day,
+      dataIndex: `day${day}`,
+      width: 90,
+      sorter: (a, b) => {
+        const dayA = a.daysByDay[day]
+        const dayB = b.daysByDay[day]
+        const durationInMsA = dayA ? dayA.durationInMs : 0
+        const durationInMsB = dayB ? dayB.durationInMs : 0
+        return durationInMsA - durationInMsB
+      },
+      render: (a, { daysByDay }: PreparedUser) => {
+        return (
+          <>{daysByDay[day] ? daysByDay[day].durationFormatted : '0'}</>
+        )
+      },
+    }
+  }) as ColumnsType<PreparedUser>
   return [titleColumn, ...dayColumns, monthlyColumns]
 }
